@@ -17,11 +17,6 @@
   --border-radius-md: 16px;
   --transition: all 0.3s ease;
   
-  --glass-bg: rgba(20, 20, 20, 0.4);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-blur: blur(24px);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  
   --container-width: 1200px;
 }
 
@@ -38,39 +33,6 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  position: relative;
-  overflow-x: hidden;
-}
-
-body::before, body::after {
-  content: "";
-  position: fixed;
-  width: 800px;
-  height: 800px;
-  border-radius: 50%;
-  filter: blur(120px);
-  z-index: -1;
-  animation: floatBlobs 25s infinite alternate ease-in-out;
-  pointer-events: none;
-}
-
-body::before {
-  top: -20%;
-  left: -10%;
-  background: rgba(220, 38, 38, 0.15);
-}
-
-body::after {
-  bottom: -20%;
-  right: -10%;
-  background: rgba(185, 28, 28, 0.12);
-  animation-delay: -12s;
-}
-
-@keyframes floatBlobs {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(100px, 50px) scale(1.1); }
-  100% { transform: translate(-50px, 100px) scale(0.9); }
 }
 
 .container {
@@ -151,18 +113,18 @@ button {
 }
 
 .bg-black {
-  background-color: transparent;
+  background-color: var(--color-black);
   color: var(--color-white);
 }
 
 .bg-white {
-  background-color: transparent;
-  color: var(--color-white);
+  background-color: var(--color-white);
+  color: var(--color-black);
 }
 
 .bg-gray {
-  background-color: transparent;
-  color: var(--color-white);
+  background-color: var(--color-gray);
+  color: var(--color-black);
 }
 
 .text-primary {
@@ -173,10 +135,13 @@ button {
   display: inline-block;
   padding: 8px 16px;
   border-radius: var(--border-radius-pill);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   font-size: 0.9rem;
   margin-bottom: 20px;
+}
+
+.bg-white .pill-tag {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }

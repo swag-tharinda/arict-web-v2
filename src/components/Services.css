@@ -3,11 +3,13 @@
 }
 
 .services .pill-tag {
-  color: var(--color-white);
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: var(--color-black);
 }
 
 .services h2 {
-  color: var(--color-white);
+  color: var(--color-black);
 }
 
 .services-list {
@@ -21,19 +23,16 @@
   grid-template-columns: auto 1fr auto;
   gap: 40px;
   align-items: center;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  background-color: var(--color-white);
   padding: 40px;
   border-radius: var(--border-radius-lg);
-  box-shadow: var(--glass-shadow);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   transition: var(--transition);
 }
 
 .service-card:hover {
   transform: translateY(-5px);
-  background: rgba(40, 40, 40, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .service-number {
@@ -43,7 +42,7 @@
 }
 
 .service-content h3 {
-  color: var(--color-white);
+  color: var(--color-black);
   margin-bottom: 10px;
   font-size: 1.8rem;
 }
@@ -58,9 +57,9 @@
 .service-tags span {
   font-size: 0.85rem;
   padding: 4px 12px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--color-gray);
   border-radius: var(--border-radius-pill);
-  color: var(--color-white);
+  color: var(--color-text-dark);
 }
 
 .service-content p {
@@ -69,7 +68,7 @@
 }
 
 .service-btn {
-  background-color: var(--color-white);
+  background-color: var(--color-black);
   color: var(--color-primary);
   width: 60px;
   height: 60px;
@@ -81,7 +80,7 @@
 
 .service-card:hover .service-btn {
   background-color: var(--color-primary);
-  color: var(--color-white);
+  color: var(--color-black);
 }
 
 @media (max-width: 768px) {
