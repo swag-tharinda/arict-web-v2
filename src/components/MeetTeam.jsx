@@ -30,19 +30,31 @@ const team = [
   {
     id: 5,
     name: "Isuru Madusanka",
-    role: "Former President, Arict",
+    role: "Events Director, Arict",
     img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80"
   },
   {
     id: 6,
     name: "Amali Wijesinghe",
-    role: "Former Vice President, Arict",
+    role: "Media Director, Arict",
     img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    id: 7,
+    name: "Ravindu Jayawardena",
+    role: "Technical Lead, Arict",
+    img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    id: 8,
+    name: "Sachini Kumari",
+    role: "Design Lead, Arict",
+    img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80"
   },
 ];
 
 const MeetTeam = () => {
-  const [active, setActive] = useState(2);
+  const [active, setActive] = useState(3);
 
   const prev = () => setActive(i => Math.max(0, i - 1));
   const next = () => setActive(i => Math.min(team.length - 1, i + 1));
