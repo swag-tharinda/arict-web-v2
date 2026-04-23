@@ -156,6 +156,45 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 12px;
+}
+
+/* Social icon row */
+.mt-card-socials {
+  display: flex;
+  gap: 8px;
+}
+
+.mt-social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s, border-color 0.2s;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.mt-social-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.mt-social-linkedin:hover {
+  background: #0077b5;
+  border-color: #0077b5;
+}
+
+.mt-social-email:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
 }
 
 /* ── Responsive ───────────────────────── */
