@@ -39,11 +39,6 @@ const Services = () => {
   return (
     <section id="services" className="services bg-gray section-padding">
       <div className="container">
-        <div className="section-header text-center">
-          <div className="pill-tag text-black">Our Services</div>
-          <h2>Discover Our <br/>Digital Solutions</h2>
-        </div>
-
         <div className="services-list">
           {services.map((service) => (
             <div key={service.id} className="service-card">

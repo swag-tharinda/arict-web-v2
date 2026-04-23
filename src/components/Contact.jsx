@@ -9,11 +9,11 @@ const Contact = () => {
         <div className="contact-grid">
           
           <div className="contact-form-section">
+
             <div className="section-header">
-              <div className="pill-tag">Reach Us</div>
               <h2>Join Us In Creating <br/>Remarkable Impact</h2>
             </div>
-            
+
             <form className="contact-form">
               <div className="form-row">
                 <input type="text" placeholder="First Name *" required />

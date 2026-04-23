@@ -21,16 +21,6 @@ const Portfolio = () => {
   return (
     <section id="portfolio" className="portfolio bg-black section-padding">
       <div className="container">
-        <div className="portfolio-header">
-          <div>
-            <div className="pill-tag">Portfolio</div>
-            <h2>Our Recent <br/>Work Portfolio</h2>
-          </div>
-          <button className="btn btn-primary">
-            View All Projects <ArrowUpRight size={20} />
-          </button>
-        </div>
-
         <div className="portfolio-grid">
           {projects.map((project) => (
             <div key={project.id} className="portfolio-card">

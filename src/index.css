@@ -41,6 +41,11 @@ body {
   padding: 0 20px;
 }
 
+/* Offset for fixed navbar on inner pages */
+.pt-150 > *:first-child {
+  padding-top: 140px !important;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   line-height: 1.1;

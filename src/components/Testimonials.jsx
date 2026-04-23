@@ -6,10 +6,6 @@ const Testimonials = () => {
   return (
     <section className="testimonials bg-gray section-padding text-center">
       <div className="container">
-        <div className="section-header">
-          <div className="pill-tag text-black">Testimonials</div>
-          <h2>Testimonials that <br/>Speak to My Results</h2>
-        </div>
 
         <div className="testimonial-slider">
           <button className="slider-btn prev">

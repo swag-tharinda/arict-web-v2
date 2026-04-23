@@ -15,7 +15,6 @@ const About = () => {
         </div>
         
         <div className="about-content">
-          <div className="pill-tag">About Us</div>
           <h2>We're a Digital Agency</h2>
           <p className="about-desc">
             We merge imagination and technology to help brands grow in an age of digital transformation.

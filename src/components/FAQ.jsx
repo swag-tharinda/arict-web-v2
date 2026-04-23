@@ -35,10 +35,6 @@ const FAQ = () => {
   return (
     <section className="faq bg-white section-padding">
       <div className="container">
-        <div className="section-header text-center">
-          <div className="pill-tag text-black">FAQ</div>
-          <h2>Questions? Look here.</h2>
-        </div>
 
         <div className="faq-container">
           {faqs.map((faq, index) => (

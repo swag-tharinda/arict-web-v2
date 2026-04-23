@@ -30,16 +30,6 @@ const Blogs = () => {
   return (
     <section className="blogs bg-black section-padding">
       <div className="container">
-        <div className="portfolio-header">
-          <div>
-            <div className="pill-tag">News & Blogs</div>
-            <h2>Our Latest <br/>News & Blogs</h2>
-          </div>
-          <button className="btn btn-primary">
-            View All Posts <ArrowUpRight size={20} />
-          </button>
-        </div>
-
         <div className="blogs-grid">
           {blogs.map((blog) => (
             <div key={blog.id} className="blog-card">
