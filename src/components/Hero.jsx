@@ -8,13 +8,13 @@ const Hero = () => {
       <div className="container hero-container">
         <div className="hero-content">
           <h1>
-            Where Innovation Meets <br />
-            <span className="text-primary">Digital Excellence</span>
+            Learn. Build. Lead. <br />
+            <span className="text-primary">With ARICT</span>
           </h1>
           <p className="hero-description">
             A premium digital agency dedicated to elevating your brand through cutting-edge web design, development, and strategic marketing.
           </p>
-          
+
           <div className="hero-actions">
             <button className="btn btn-primary">
               Start a Project <ArrowRight size={20} />
