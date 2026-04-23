@@ -8,7 +8,9 @@ const Hero = () => {
       <div className="container hero-container">
         <div className="hero-content">
           <h1>
-            Learn. Build. Lead. <br />
+            Learn. <br />
+            Build. <br />
+            Lead. <br />
             <span className="text-primary">With ARICT</span>
           </h1>
           <p className="hero-description">
