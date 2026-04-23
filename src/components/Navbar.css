@@ -26,12 +26,15 @@
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
 }
 
-.logo span {
-  color: var(--color-primary);
+.logo-img {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .nav-links {

@@ -49,9 +49,16 @@
 }
 
 .brand-col .logo {
-  font-size: 2rem;
+  display: inline-flex;
+  align-items: center;
   margin-bottom: 15px;
-  display: inline-block;
+}
+
+.footer-logo-img {
+  height: 96px;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .brand-col p {

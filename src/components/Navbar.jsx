@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import logo from '../assets/logo.png';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -16,7 +17,7 @@ const Navbar = () => {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container navbar-container">
         <a href="#" className="logo">
-          Arict<span>.</span>
+          <img src={logo} alt="ARICT Logo" className="logo-img" />
         </a>
         <ul className="nav-links">
           <li><a href="#home">Home</a></li>
