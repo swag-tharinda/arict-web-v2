@@ -22,7 +22,6 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: clip;
 }
 
 * {
@@ -38,6 +37,11 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Contain horizontal overflow at the content level, not html/body */
+/* (overflow-x on html/body breaks backdrop-filter on fixed navbar) */
+main {
   overflow-x: clip;
 }
 
