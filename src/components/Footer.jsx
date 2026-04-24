@@ -34,7 +34,7 @@ const Footer = () => {
               <h4>Company</h4>
               <ul>
                 <li><Link to="/about">About Us</Link></li>
-                <li><Link to="/services">Services</Link></li>
+                <li><Link to="/events">Events</Link></li>
                 <li><Link to="/portfolio">Portfolio</Link></li>
                 <li><Link to="/blogs">Blogs</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
@@ -42,12 +42,12 @@ const Footer = () => {
             </div>
 
             <div className="footer-col">
-              <h4>Services</h4>
+              <h4>Events</h4>
               <ul>
-                <li><a href="#">UI/UX Design</a></li>
-                <li><a href="#">Web Development</a></li>
-                <li><a href="#">Digital Marketing</a></li>
-                <li><a href="#">SEO Optimization</a></li>
+                <li><a href="#">Tech Symposium</a></li>
+                <li><a href="#">Hackathon</a></li>
+                <li><a href="#">Career Seminars</a></li>
+                <li><a href="#">Workshops</a></li>
                 <li><a href="#">Branding</a></li>
               </ul>
             </div>

@@ -52,7 +52,7 @@ const Navbar = () => {
           <div className="nav-indicator" style={indicatorStyle}></div>
           <li onMouseEnter={handleMouseEnter}><Link to="/">Home</Link></li>
           <li onMouseEnter={handleMouseEnter}><Link to="/about">About</Link></li>
-          <li onMouseEnter={handleMouseEnter}><Link to="/services">Services</Link></li>
+          <li onMouseEnter={handleMouseEnter}><Link to="/events">Events</Link></li>
           <li onMouseEnter={handleMouseEnter}><Link to="/portfolio">Portfolio</Link></li>
           <li onMouseEnter={handleMouseEnter}><Link to="/contact">Contact</Link></li>
         </ul>

@@ -1,24 +1,24 @@
-.services .section-header {
+.events .section-header {
   margin-bottom: 60px;
 }
 
-.services .pill-tag {
+.events .pill-tag {
   background: rgba(0, 0, 0, 0.05);
   border-color: rgba(0, 0, 0, 0.1);
   color: var(--color-black);
 }
 
-.services h2 {
+.events h2 {
   color: var(--color-black);
 }
 
-.services-list {
+.events-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.service-card {
+.event-card {
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 40px;
@@ -30,31 +30,31 @@
   transition: var(--transition);
 }
 
-.service-card:hover {
+.event-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
-.service-number {
+.event-number {
   font-size: 2rem;
   font-weight: 300;
   color: var(--color-text-muted);
 }
 
-.service-content h3 {
+.event-content h3 {
   color: var(--color-black);
   margin-bottom: 10px;
   font-size: 1.8rem;
 }
 
-.service-tags {
+.event-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 15px;
 }
 
-.service-tags span {
+.event-tags span {
   font-size: 0.85rem;
   padding: 4px 12px;
   background-color: var(--color-gray);
@@ -62,12 +62,12 @@
   color: var(--color-text-dark);
 }
 
-.service-content p {
+.event-content p {
   color: var(--color-text-muted);
   max-width: 600px;
 }
 
-.service-btn {
+.event-btn {
   background-color: var(--color-black);
   color: var(--color-primary);
   width: 60px;
@@ -78,18 +78,18 @@
   justify-content: center;
 }
 
-.service-card:hover .service-btn {
+.event-card:hover .event-btn {
   background-color: var(--color-primary);
   color: var(--color-black);
 }
 
 @media (max-width: 768px) {
-  .service-card {
+  .event-card {
     grid-template-columns: 1fr;
     gap: 20px;
     padding: 30px 20px;
   }
-  .service-number {
+  .event-number {
     display: none;
   }
 }

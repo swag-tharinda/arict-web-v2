@@ -7,8 +7,8 @@ const FAQ = () => {
 
   const faqs = [
     {
-      question: "What services does your digital agency offer?",
-      answer: "We offer a comprehensive range of digital services including web design, UI/UX design, custom web development, digital marketing, SEO, and social media management."
+      question: "What events does your association organize?",
+      answer: "We organize a comprehensive range of events including technical symposiums, hackathons, career guidance seminars, and interactive workshops."
     },
     {
       question: "How long does it take to build a custom website?",
