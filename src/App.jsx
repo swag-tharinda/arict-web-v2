@@ -10,6 +10,7 @@ import About from './pages/About';
 import Events from './pages/Events';
 import Gallery from './pages/Gallery';
 import Blogs from './pages/Blogs';
+import SingleBlog from './pages/SingleBlog';
 import Contact from './pages/Contact';
 
 // Admin Imports
@@ -92,6 +93,7 @@ function App() {
         <Route path="/events" element={<PublicLayout><Events /></PublicLayout>} />
         <Route path="/gallery" element={<PublicLayout><Gallery /></PublicLayout>} />
         <Route path="/blogs" element={<PublicLayout><Blogs /></PublicLayout>} />
+        <Route path="/blogs/:slug" element={<PublicLayout><SingleBlog /></PublicLayout>} />
         <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
 
         {/* Admin Login */}

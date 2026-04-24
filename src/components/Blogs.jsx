@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, Calendar, Tag, ChevronRight } from 'lucide-react';
 import { apiFetch } from '../utils/api';
 import './Blogs.css';
@@ -90,9 +91,9 @@ const Blogs = () => {
                    (selectedBlog?.content ? selectedBlog.content.replace(/<[^>]*>?/gm, '').substring(0, 200) + '...' : 'Explore this insightful article from our team.')}
                 </p>
 
-                <a href={`/blogs/${selectedBlog?.slug}`} className="btn btn-primary read-master-btn">
+                <Link to={`/blogs/${selectedBlog?.slug}`} className="btn btn-primary read-master-btn">
                   Read Full Article <ArrowRight size={20} />
-                </a>
+                </Link>
               </div>
             </div>
           </div>
