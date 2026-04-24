@@ -25,6 +25,18 @@ export default async function handler(req, res) {
       return res.status(201).json(newMember[0]);
     }
 
+    if (req.method === 'PATCH') {
+      if (!requireAuth(req, res)) return;
+      
+      const { updates } = req.body;
+      if (Array.isArray(updates)) {
+        for (const update of updates) {
+          await sql`UPDATE members SET display_order = ${update.display_order} WHERE id = ${update.id}`;
+        }
+      }
+      return res.status(200).json({ success: true });
+    }
+
     return res.status(405).json({ error: 'Method not allowed' });
   } catch (error) {
     console.error('API Error:', error);

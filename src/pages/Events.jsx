@@ -18,9 +18,6 @@ const Events = () => {
         }}
       >
         <div className="container" style={{ width: '100%' }}>
-          <div style={{ display: 'inline-block', padding: '6px 16px', borderRadius: '30px', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', color: 'var(--color-primary)', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '20px', border: '1px solid rgba(255,255,255,0.2)' }}>
-            Discover the Future
-          </div>
           <h1 style={{ color: '#fff', marginBottom: '20px', fontSize: 'clamp(3.5rem, 6vw, 5.5rem)', lineHeight: 1.1 }}>
             Unleash Your <br/><span style={{ color: 'var(--color-primary)' }}>Potential.</span>
           </h1>

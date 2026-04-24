@@ -1,51 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin, Clock, Heart, Hourglass } from 'lucide-react';
+import { apiFetch } from '../utils/api';
 import './Events.css';
 
-const standardEvents = Array(8).fill({
-  id: "std",
-  title: "The Phantom of the Opera",
-  location: "Hamilton - Live in London",
-  time: "12:00 pm to 01:00 pm",
-  dateBadge: { day: "18", month: "Feb" },
-  image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80"
-}).map((item, index) => ({ ...item, id: `std-${index}` }));
-
-const featuredEvents = [
-  {
-    id: "feat-1",
-    title: "Music Event",
-    desc: "Experience an unforgettable night with Coldplay, featuring their biggest hits and a mesmerizing light show!",
-    image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80",
-    time: { h: "07", m: "49", s: "39" }
-  },
-  {
-    id: "feat-2",
-    title: "Music Event",
-    desc: "Experience an unforgettable night with Coldplay, featuring their biggest hits and a mesmerizing light show!",
-    image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80",
-    time: { h: "07", m: "49", s: "39" }
-  },
-  {
-    id: "feat-3",
-    title: "Music Event",
-    desc: "Experience an unforgettable night with Coldplay, featuring their biggest hits and a mesmerizing light show!",
-    image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80",
-    time: { h: "07", m: "49", s: "39" }
-  }
-];
-
-const upcomingEvents = Array(4).fill({
-  id: "up",
-  date: "18",
-  monthYear: "February\n2025",
-  title: "The Phantom of the Opera",
-  location: "Hamilton - Live in London",
-  time: "12:00 pm to 01:00 pm",
-}).map((item, index) => ({ ...item, id: `up-${index}` }));
-
-
 const Events = () => {
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    apiFetch('/events')
+      .then(data => {
+        setEvents(data || []);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Failed to load events:', err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div style={{ color: 'white', textAlign: 'center', padding: '100px' }}>Loading events...</div>;
+  }
+
+  // Format date helper
+  const formatDate = (dateString) => {
+    if (!dateString) return { day: '-', month: '-' };
+    const d = new Date(dateString);
+    return {
+      day: d.toLocaleString('default', { day: '2-digit' }),
+      month: d.toLocaleString('default', { month: 'short' }),
+      time: d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      monthYear: d.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '\n')
+    };
+  };
   return (
     <>
       {/* SECTION 1: Standard Grid */}
@@ -57,25 +45,27 @@ const Events = () => {
           </div>
           
           <div className="events-grid-4">
-            {standardEvents.slice(0, 4).map(event => (
+            {events.slice(0, 4).map(event => {
+              const dateMeta = formatDate(event.event_date);
+              return (
               <div key={event.id} className="std-event-card">
                 <div className="std-event-img-wrap">
-                  <img src={event.image} alt={event.title} />
+                  <img src={event.image_url || "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80"} alt={event.title} />
                   <div className="date-badge">
-                    <span className="db-day">{event.dateBadge.day}</span>
-                    <span className="db-month">{event.dateBadge.month}</span>
+                    <span className="db-day">{dateMeta.day}</span>
+                    <span className="db-month">{dateMeta.month}</span>
                   </div>
                   <button className="heart-btn"><Heart size={16} /></button>
                 </div>
                 <div className="std-event-info">
                   <h3>{event.title}</h3>
                   <div className="std-event-meta">
-                    <span><MapPin size={12} /> {event.location}</span>
-                    <span><Clock size={12} /> {event.time}</span>
+                    <span><MapPin size={12} /> {event.location || '-'}</span>
+                    <span><Clock size={12} /> {dateMeta.time}</span>
                   </div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         </div>
       </section>
@@ -93,12 +83,12 @@ const Events = () => {
           </div>
 
           <div className="events-grid-3">
-            {featuredEvents.map(event => (
+            {events.slice(0, 3).map(event => (
               <div key={event.id} className="feat-event-card">
-                <img src={event.image} alt={event.title} className="feat-img" />
+                <img src={event.image_url || "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80"} alt={event.title} className="feat-img" />
                 <div className="feat-event-info">
                   <h3>{event.title}</h3>
-                  <p>{event.desc}</p>
+                  <p>{event.description?.substring(0, 80) || ''}...</p>
                   
                   <div className="countdown-box">
                     <div className="cd-title">
@@ -107,15 +97,15 @@ const Events = () => {
                     </div>
                     <div className="cd-timers">
                       <div className="cd-item">
-                        <strong>{event.time.h}</strong>
+                        <strong>--</strong>
                         <span>Hours</span>
                       </div>
                       <div className="cd-item">
-                        <strong>{event.time.m}</strong>
+                        <strong>--</strong>
                         <span>Minutes</span>
                       </div>
                       <div className="cd-item">
-                        <strong>{event.time.s}</strong>
+                        <strong>--</strong>
                         <span>Seconds</span>
                       </div>
                     </div>
@@ -131,30 +121,32 @@ const Events = () => {
       <section className="events-standard section-padding bg-black">
         <div className="container">
           <div className="section-header-flex">
-            <h2>Events Near By Your City</h2>
+            <h2>More Events</h2>
             <a href="#" className="view-all-link">View All Events ↗</a>
           </div>
           
           <div className="events-grid-4">
-            {standardEvents.slice(4, 8).map(event => (
+            {events.slice(4, 8).map(event => {
+              const dateMeta = formatDate(event.event_date);
+              return (
               <div key={event.id} className="std-event-card">
                 <div className="std-event-img-wrap">
-                  <img src={event.image} alt={event.title} />
+                  <img src={event.image_url || "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80"} alt={event.title} />
                   <div className="date-badge">
-                    <span className="db-day">{event.dateBadge.day}</span>
-                    <span className="db-month">{event.dateBadge.month}</span>
+                    <span className="db-day">{dateMeta.day}</span>
+                    <span className="db-month">{dateMeta.month}</span>
                   </div>
                   <button className="heart-btn"><Heart size={16} /></button>
                 </div>
                 <div className="std-event-info">
                   <h3>{event.title}</h3>
                   <div className="std-event-meta">
-                    <span><MapPin size={12} /> {event.location}</span>
-                    <span><Clock size={12} /> {event.time}</span>
+                    <span><MapPin size={12} /> {event.location || '-'}</span>
+                    <span><Clock size={12} /> {dateMeta.time}</span>
                   </div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         </div>
       </section>
@@ -168,26 +160,34 @@ const Events = () => {
           </div>
 
           <div className="upcoming-list">
-            {upcomingEvents.map(event => (
+            {events.slice(0, 4).map(event => {
+              const dateMeta = formatDate(event.event_date);
+              return (
               <div key={event.id} className="upcoming-row">
                 <div className="up-date">
-                  <span className="up-day">{event.date}</span>
-                  <span className="up-month" style={{ whiteSpace: 'pre-line' }}>{event.monthYear}</span>
+                  <span className="up-day">{dateMeta.day}</span>
+                  <span className="up-month" style={{ whiteSpace: 'pre-line' }}>{dateMeta.monthYear}</span>
                 </div>
                 
                 <div className="up-info">
                   <h3>{event.title}</h3>
                   <div className="up-meta">
-                    <span><MapPin size={14} /> {event.location}</span>
-                    <span><Clock size={14} /> {event.time}</span>
+                    <span><MapPin size={14} /> {event.location || '-'}</span>
+                    <span><Clock size={14} /> {dateMeta.time}</span>
                   </div>
                 </div>
                 
                 <div className="up-action">
-                  <button className="buy-ticket-btn">Register</button>
+                  {event.registration_link ? (
+                    <a href={event.registration_link} target="_blank" rel="noreferrer">
+                      <button className="buy-ticket-btn">Register</button>
+                    </a>
+                  ) : (
+                    <button className="buy-ticket-btn">Register</button>
+                  )}
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         </div>
       </section>

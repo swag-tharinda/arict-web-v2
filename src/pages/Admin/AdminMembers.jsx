@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { apiFetch } from '../../utils/api';
 import { getDriveEmbedUrl } from '../../utils/gdrive';
-import { Plus, Edit, Trash2, X } from 'lucide-react';
+import { Plus, Edit, Trash2, X, ArrowUp, ArrowDown, GripVertical } from 'lucide-react';
 import { toast } from 'sonner';
 
 const AdminMembers = () => {
@@ -45,9 +45,10 @@ const AdminMembers = () => {
       setRawImageUrl(member.photo_url || '');
     } else {
       setCurrentMember(null);
+      const nextOrder = members.length > 0 ? Math.max(...members.map(m => m.display_order || 0)) + 1 : 0;
       setFormData({
         name: '', role: '', photo_url: '', linkedin_url: '', 
-        github_url: '', email: '', display_order: '0'
+        github_url: '', email: '', display_order: nextOrder.toString()
       });
       setRawImageUrl('');
     }
@@ -90,6 +91,50 @@ const AdminMembers = () => {
     } catch (error) {
       toast.error('Error saving member: ' + error.message);
     }
+  };
+
+  const [draggedIndex, setDraggedIndex] = useState(null);
+
+  const saveReorder = async (newMembersArray) => {
+    const updated = newMembersArray.map((m, i) => ({ ...m, display_order: i }));
+    setMembers(updated);
+    
+    try {
+      const updates = updated.map(m => ({ id: m.id, display_order: m.display_order }));
+      await apiFetch('/members', {
+        method: 'PATCH',
+        body: { updates }
+      });
+      toast.success('Order saved');
+    } catch (err) {
+      toast.error('Failed to save order: ' + err.message);
+      fetchMembers(); // revert to DB state
+    }
+  };
+
+  const moveMember = (index, direction) => {
+    if (direction === 'up' && index === 0) return;
+    if (direction === 'down' && index === members.length - 1) return;
+    
+    const newMembers = [...members];
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    
+    const temp = newMembers[index];
+    newMembers[index] = newMembers[targetIndex];
+    newMembers[targetIndex] = temp;
+    
+    saveReorder(newMembers);
+  };
+
+  const handleDragStart = (index) => setDraggedIndex(index);
+  const handleDragOver = (e) => e.preventDefault();
+  const handleDrop = (dropIndex) => {
+    if (draggedIndex === null || draggedIndex === dropIndex) return;
+    const newMembers = [...members];
+    const [draggedItem] = newMembers.splice(draggedIndex, 1);
+    newMembers.splice(dropIndex, 0, draggedItem);
+    saveReorder(newMembers);
+    setDraggedIndex(null);
   };
 
   const handleDelete = (id) => {
@@ -135,10 +180,23 @@ const AdminMembers = () => {
             {members.length === 0 ? (
               <tr><td colSpan="4" style={{ textAlign: 'center' }}>No members found.</td></tr>
             ) : (
-              members.map(member => (
-                <tr key={member.id}>
+              members.map((member, idx) => (
+                <tr 
+                  key={member.id}
+                  draggable
+                  onDragStart={() => handleDragStart(idx)}
+                  onDragOver={handleDragOver}
+                  onDrop={() => handleDrop(idx)}
+                  onDragEnd={() => setDraggedIndex(null)}
+                  style={{ 
+                    cursor: draggedIndex !== null ? 'grabbing' : 'grab',
+                    opacity: draggedIndex === idx ? 0.5 : 1,
+                    transition: 'all 0.2s ease'
+                  }}
+                >
                   <td>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <GripVertical size={16} style={{ color: 'var(--color-text-muted)', cursor: 'grab' }} />
                       {member.photo_url ? (
                         <img src={member.photo_url} alt={member.name} style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} />
                       ) : (
@@ -150,9 +208,12 @@ const AdminMembers = () => {
                   <td>{member.role || '-'}</td>
                   <td>{member.display_order}</td>
                   <td>
-                    <div className="admin-table-actions">
-                      <button className="action-btn edit" onClick={() => handleOpenModal(member)}><Edit size={18} /></button>
-                      <button className="action-btn delete" onClick={() => handleDelete(member.id)}><Trash2 size={18} /></button>
+                    <div className="admin-table-actions" style={{ display: 'flex', gap: '5px' }}>
+                      <button className="action-btn" onClick={() => moveMember(idx, 'up')} disabled={idx === 0} title="Move Up"><ArrowUp size={18} /></button>
+                      <button className="action-btn" onClick={() => moveMember(idx, 'down')} disabled={idx === members.length - 1} title="Move Down"><ArrowDown size={18} /></button>
+                      <div style={{ width: '1px', background: 'rgba(255,255,255,0.2)', margin: '0 5px' }}></div>
+                      <button className="action-btn edit" onClick={() => handleOpenModal(member)} title="Edit"><Edit size={18} /></button>
+                      <button className="action-btn delete" onClick={() => handleDelete(member.id)} title="Delete"><Trash2 size={18} /></button>
                     </div>
                   </td>
                 </tr>
