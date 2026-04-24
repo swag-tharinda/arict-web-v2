@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Tag, Clock } from 'lucide-react';
+import { toast } from 'sonner';
 import { apiFetch } from '../utils/api';
 import './SingleBlogView.css';
 
@@ -107,7 +108,7 @@ const SingleBlogView = () => {
             <div className="share-section">
               <p>Share this article:</p>
               <div className="share-buttons">
-                <button onClick={() => { navigator.clipboard.writeText(window.location.href); alert('Link copied to clipboard!'); }} className="share-btn">
+                <button onClick={() => { navigator.clipboard.writeText(window.location.href); toast.success('Link copied to clipboard!'); }} className="share-btn">
                   Copy Link
                 </button>
               </div>
