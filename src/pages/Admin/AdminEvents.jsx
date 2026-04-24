@@ -3,6 +3,8 @@ import { apiFetch } from '../../utils/api';
 import { getDriveEmbedUrl } from '../../utils/gdrive';
 import { Plus, Edit, Trash2, X, Image as ImageIcon } from 'lucide-react';
 import { toast } from 'sonner';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const AdminEvents = () => {
   const [events, setEvents] = useState([]);
@@ -10,7 +12,7 @@ const AdminEvents = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentEvent, setCurrentEvent] = useState(null);
   const [formData, setFormData] = useState({
-    title: '', description: '', event_date: '', location: '', 
+    title: '', description: '', event_date: null, location: '', 
     image_url: '', registration_link: '', capacity: ''
   });
   const [rawImageUrl, setRawImageUrl] = useState('');
@@ -36,7 +38,7 @@ const AdminEvents = () => {
       setFormData({
         title: event.title || '',
         description: event.description || '',
-        event_date: event.event_date ? new Date(event.event_date).toISOString().slice(0, 16) : '',
+        event_date: event.event_date ? new Date(event.event_date) : null,
         location: event.location || '',
         image_url: event.image_url || '',
         registration_link: event.registration_link || '',
@@ -46,7 +48,7 @@ const AdminEvents = () => {
     } else {
       setCurrentEvent(null);
       setFormData({
-        title: '', description: '', event_date: '', location: '', 
+        title: '', description: '', event_date: null, location: '', 
         image_url: '', registration_link: '', capacity: ''
       });
       setRawImageUrl('');
@@ -70,7 +72,8 @@ const AdminEvents = () => {
     try {
       const payload = {
         ...formData,
-        capacity: formData.capacity ? parseInt(formData.capacity, 10) : null
+        capacity: formData.capacity ? parseInt(formData.capacity, 10) : null,
+        event_date: formData.event_date ? formData.event_date.toISOString() : null
       };
 
       if (currentEvent) {
@@ -170,9 +173,20 @@ const AdminEvents = () => {
                 </div>
                 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                  <div className="form-group">
+                  <div className="form-group custom-datepicker-wrapper">
                     <label>Event Date/Time</label>
-                    <input type="datetime-local" value={formData.event_date} onChange={e => setFormData({ ...formData, event_date: e.target.value })} />
+                    <DatePicker 
+                      selected={formData.event_date} 
+                      onChange={(date) => setFormData({ ...formData, event_date: date })}
+                      showTimeSelect
+                      timeFormat="HH:mm"
+                      timeIntervals={15}
+                      timeCaption="time"
+                      dateFormat="MMMM d, yyyy h:mm aa"
+                      placeholderText="Select Date and Time"
+                      wrapperClassName="date-picker-full-width"
+                      className="react-datepicker-input"
+                    />
                   </div>
                   <div className="form-group">
                     <label>Location</label>
