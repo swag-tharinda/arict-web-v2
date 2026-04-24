@@ -3,6 +3,51 @@ import { MapPin, Clock, Heart, Hourglass } from 'lucide-react';
 import { apiFetch } from '../utils/api';
 import './Events.css';
 
+// Live countdown hook — ticks every second
+const useCountdown = (targetDate) => {
+  const calcTime = () => {
+    const diff = new Date(targetDate) - new Date();
+    if (!targetDate || diff <= 0) return { hours: 0, minutes: 0, seconds: 0, expired: true };
+    const totalSecs = Math.floor(diff / 1000);
+    return {
+      hours: Math.floor(totalSecs / 3600),
+      minutes: Math.floor((totalSecs % 3600) / 60),
+      seconds: totalSecs % 60,
+      expired: false
+    };
+  };
+  const [time, setTime] = useState(calcTime);
+  useEffect(() => {
+    if (!targetDate) return;
+    const id = setInterval(() => setTime(calcTime()), 1000);
+    return () => clearInterval(id);
+  }, [targetDate]);
+  return time;
+};
+
+// Wrapper so each card gets its own interval
+const CountdownBox = ({ eventDate }) => {
+  const { hours, minutes, seconds, expired } = useCountdown(eventDate);
+  const pad = (n) => String(n).padStart(2, '0');
+  return (
+    <div className="countdown-box">
+      <div className="cd-title">
+        <span>Remaining times</span>
+        <Hourglass size={14} className="hg-icon" />
+      </div>
+      {expired ? (
+        <div className="cd-expired">Event Started</div>
+      ) : (
+        <div className="cd-timers">
+          <div className="cd-item"><strong>{pad(hours)}</strong><span>Hours</span></div>
+          <div className="cd-item"><strong>{pad(minutes)}</strong><span>Minutes</span></div>
+          <div className="cd-item"><strong>{pad(seconds)}</strong><span>Seconds</span></div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Events = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -89,27 +134,7 @@ const Events = () => {
                 <div className="feat-event-info">
                   <h3>{event.title}</h3>
                   <p>{event.description?.substring(0, 80) || ''}...</p>
-                  
-                  <div className="countdown-box">
-                    <div className="cd-title">
-                      <span>Remaining times</span>
-                      <Hourglass size={14} className="hg-icon" />
-                    </div>
-                    <div className="cd-timers">
-                      <div className="cd-item">
-                        <strong>--</strong>
-                        <span>Hours</span>
-                      </div>
-                      <div className="cd-item">
-                        <strong>--</strong>
-                        <span>Minutes</span>
-                      </div>
-                      <div className="cd-item">
-                        <strong>--</strong>
-                        <span>Seconds</span>
-                      </div>
-                    </div>
-                  </div>
+                  <CountdownBox eventDate={event.event_date} />
                 </div>
               </div>
             ))}

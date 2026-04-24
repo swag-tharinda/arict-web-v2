@@ -70,10 +70,16 @@ const AdminEvents = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Format as local datetime (not UTC) so the exact selected time is stored in the DB.
+      // toISOString() would shift by the timezone offset (e.g. UTC+5:30 → -5h30m).
+      const toLocalISO = (d) => {
+        const pad = (n) => String(n).padStart(2, '0');
+        return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+      };
       const payload = {
         ...formData,
         capacity: formData.capacity ? parseInt(formData.capacity, 10) : null,
-        event_date: formData.event_date ? formData.event_date.toISOString() : null
+        event_date: formData.event_date ? toLocalISO(formData.event_date) : null
       };
 
       if (currentEvent) {

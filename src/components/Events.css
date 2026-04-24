@@ -255,6 +255,16 @@
   font-weight: 600;
 }
 
+.cd-expired {
+  padding: 18px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 /* =========================================
    SECTION 4: Upcoming Events (List)
    ========================================= */
