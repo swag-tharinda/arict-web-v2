@@ -27,7 +27,8 @@ const Gallery = () => {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
+    let rafId;
+    const checkScroll = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
       
@@ -35,23 +36,24 @@ const Gallery = () => {
       const scrollProgress = -rect.top / window.innerHeight;
       
       // If we are within the section bounds, update the active slide
-      if (scrollProgress >= -0.5 && scrollProgress <= slides.length) {
+      if (scrollProgress >= -0.5 && scrollProgress <= slides.length + 1) {
         let newIndex = Math.round(scrollProgress);
         if (newIndex >= slides.length) newIndex = slides.length - 1;
         if (newIndex < 0) newIndex = 0;
         
-        if (activeIndex !== newIndex) {
-          setActiveIndex(newIndex);
-        }
+        setActiveIndex(prev => {
+          if (prev !== newIndex) return newIndex;
+          return prev;
+        });
       }
+      
+      rafId = requestAnimationFrame(checkScroll);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    // Initial check
-    handleScroll();
+    rafId = requestAnimationFrame(checkScroll);
     
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeIndex]);
+    return () => cancelAnimationFrame(rafId);
+  }, []);
 
   return (
     <section 
