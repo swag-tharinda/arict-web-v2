@@ -71,44 +71,28 @@ function App() {
 
   return (
     <>
-<<<<<<< Updated upstream
-      <Navbar />
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/blogs" element={<Blogs />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </main>
-      <Footer />
-      <ScrollToTop />
-=======
       <Toaster theme="dark" richColors position="bottom-right" />
       <Routes>
         {/* Public Routes */}
-      <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
-      <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
-      <Route path="/events" element={<PublicLayout><Events /></PublicLayout>} />
-      <Route path="/portfolio" element={<PublicLayout><Portfolio /></PublicLayout>} />
-      <Route path="/blogs" element={<PublicLayout><Blogs /></PublicLayout>} />
-      <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
+        <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
+        <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
+        <Route path="/services" element={<PublicLayout><Services /></PublicLayout>} />
+        <Route path="/portfolio" element={<PublicLayout><Portfolio /></PublicLayout>} />
+        <Route path="/blogs" element={<PublicLayout><Blogs /></PublicLayout>} />
+        <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
 
-      {/* Admin Login */}
-      <Route path="/admin" element={<AdminLogin />} />
-      
-      {/* Admin Dashboard Routes */}
-      <Route element={<AdminLayout />}>
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/events" element={<AdminEvents />} />
-        <Route path="/admin/members" element={<AdminMembers />} />
-        <Route path="/admin/blogs" element={<AdminBlogs />} />
-        <Route path="/admin/notices" element={<AdminNotices />} />
-      </Route>
-    </Routes>
->>>>>>> Stashed changes
+        {/* Admin Login */}
+        <Route path="/admin" element={<AdminLogin />} />
+        
+        {/* Admin Dashboard Routes */}
+        <Route element={<AdminLayout />}>
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/events" element={<AdminEvents />} />
+          <Route path="/admin/members" element={<AdminMembers />} />
+          <Route path="/admin/blogs" element={<AdminBlogs />} />
+          <Route path="/admin/notices" element={<AdminNotices />} />
+        </Route>
+      </Routes>
     </>
   );
 }
