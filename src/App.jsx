@@ -37,6 +37,14 @@ const PublicLayout = ({ children }) => (
   </>
 );
 
+// Layout wrapper for admin pages (cursor only, no nav/footer)
+const AdminLayoutWrapper = () => (
+  <>
+    <CustomCursor />
+    <AdminLayout />
+  </>
+);
+
 function App() {
   const location = useLocation();
 
@@ -86,10 +94,10 @@ function App() {
         <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
 
         {/* Admin Login */}
-        <Route path="/admin" element={<AdminLogin />} />
+        <Route path="/admin" element={<><CustomCursor /><AdminLogin /></>} />
         
         {/* Admin Dashboard Routes */}
-        <Route element={<AdminLayout />}>
+        <Route element={<AdminLayoutWrapper />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/events" element={<AdminEvents />} />
           <Route path="/admin/members" element={<AdminMembers />} />
