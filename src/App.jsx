@@ -6,7 +6,7 @@ import ScrollToTop from './components/ScrollToTop';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
-import Services from './pages/Services';
+import Events from './pages/Events';
 import Portfolio from './pages/Portfolio';
 import Blogs from './pages/Blogs';
 import Contact from './pages/Contact';
