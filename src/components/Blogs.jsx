@@ -8,9 +8,11 @@ const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const listRef = useRef(null);
 
   useEffect(() => {
+    setIsLoading(true);
     apiFetch('/blogs')
       .then(data => {
         if (data && data.length > 0) {
@@ -18,7 +20,8 @@ const Blogs = () => {
           setSelectedBlog(data[0]); // Default to first blog
         }
       })
-      .catch(err => console.error("Failed to load blogs:", err));
+      .catch(err => console.error("Failed to load blogs:", err))
+      .finally(() => setIsLoading(false));
   }, []);
 
   const handleSelectBlog = (blog) => {
@@ -32,13 +35,49 @@ const Blogs = () => {
     }, 300); // 300ms matches the CSS transition duration
   };
 
+  if (isLoading) {
+    return (
+      <section className="blogs bg-black section-padding">
+        <div className="container">
+          <div className="section-header" style={{ marginBottom: '60px' }}>
+            <p className="section-tag">Insights & Stories</p>
+            <h2>Our <span style={{ color: 'var(--color-primary)' }}>Blogs</span></h2>
+          </div>
+          <div className="blogs-split-layout">
+            <div className="blog-master-view">
+              <div className="skeleton-box skel-master"></div>
+            </div>
+            <div className="blog-list-view">
+              <div className="blog-list-header">
+                <h4>Recent Posts</h4>
+                <div className="header-line"></div>
+              </div>
+              <div className="blog-list-items" style={{ overflow: 'hidden' }}>
+                {[1, 2, 3, 4].map(i => (
+                  <div key={i} className="skel-list-item">
+                    <div className="skeleton-box skel-img"></div>
+                    <div className="skel-content">
+                      <div className="skeleton-box skel-text-short"></div>
+                      <div className="skeleton-box skel-text-long"></div>
+                      <div className="skeleton-box skel-text-long" style={{width: '60%'}}></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   if (blogs.length === 0) {
     return (
       <section className="blogs bg-black section-padding">
         <div className="container">
           <div className="section-header" style={{ marginBottom: '60px' }}>
             <p className="section-tag">Insights & Stories</p>
-            <h2>Latest <span style={{ color: 'var(--color-primary)' }}>Blogs</span></h2>
+            <h2>Our <span style={{ color: 'var(--color-primary)' }}>Blogs</span></h2>
           </div>
           <div className="empty-state">
             <p>No published blogs yet. Stay tuned!</p>
