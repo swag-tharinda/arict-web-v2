@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MapPin, Clock, Heart, Hourglass } from 'lucide-react';
 import { apiFetch } from '../utils/api';
 import './Events.css';
@@ -51,6 +52,7 @@ const CountdownBox = ({ eventDate }) => {
 };
 
 const Events = () => {
+  const navigate = useNavigate();
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -189,32 +191,33 @@ const Events = () => {
       <section id="events-grid" className="events-standard section-padding bg-black">
         <div className="container">
           <div className="section-header-flex">
-            <h2>Events Near By Your City</h2>
+            <h2>Events Near By You</h2>
             <a href="#" className="view-all-link">View All Events ↗</a>
           </div>
-          
+
           <div className="events-grid-4">
             {events.slice(0, 4).map(event => {
               const dateMeta = formatDate(event.event_date);
               return (
-              <div key={event.id} className="std-event-card">
-                <div className="std-event-img-wrap">
-                  <img src={event.image_url || "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80"} alt={event.title} />
-                  <div className="date-badge">
-                    <span className="db-day">{dateMeta.day}</span>
-                    <span className="db-month">{dateMeta.month}</span>
+                <div key={event.id} className="std-event-card" onClick={() => navigate('/events/' + event.id)} style={{ cursor: 'pointer' }}>
+                  <div className="std-event-img-wrap">
+                    <img src={event.image_url || "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80"} alt={event.title} />
+                    <div className="date-badge">
+                      <span className="db-day">{dateMeta.day}</span>
+                      <span className="db-month">{dateMeta.month}</span>
+                    </div>
+                    <button className="heart-btn" onClick={(e) => e.stopPropagation()}><Heart size={16} /></button>
                   </div>
-                  <button className="heart-btn"><Heart size={16} /></button>
-                </div>
-                <div className="std-event-info">
-                  <h3>{event.title}</h3>
-                  <div className="std-event-meta">
-                    <span><MapPin size={12} /> {event.location || '-'}</span>
-                    <span><Clock size={12} /> {dateMeta.time}</span>
+                  <div className="std-event-info">
+                    <h3>{event.title}</h3>
+                    <div className="std-event-meta">
+                      <span><MapPin size={12} /> {event.location || '-'}</span>
+                      <span><Clock size={12} /> {dateMeta.time}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )})}
+              )
+            })}
           </div>
         </div>
       </section>
@@ -233,7 +236,7 @@ const Events = () => {
 
           <div className="events-grid-3">
             {events.slice(0, 3).map(event => (
-              <div key={event.id} className="feat-event-card">
+              <div key={event.id} className="feat-event-card" onClick={() => navigate('/events/' + event.id)} style={{ cursor: 'pointer' }}>
                 <img src={event.image_url || "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80"} alt={event.title} className="feat-img" />
                 <div className="feat-event-info">
                   <h3>{event.title}</h3>
@@ -253,29 +256,30 @@ const Events = () => {
             <h2>More Events</h2>
             <a href="#" className="view-all-link">View All Events ↗</a>
           </div>
-          
+
           <div className="events-grid-4">
             {events.slice(4, 8).map(event => {
               const dateMeta = formatDate(event.event_date);
               return (
-              <div key={event.id} className="std-event-card">
-                <div className="std-event-img-wrap">
-                  <img src={event.image_url || "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80"} alt={event.title} />
-                  <div className="date-badge">
-                    <span className="db-day">{dateMeta.day}</span>
-                    <span className="db-month">{dateMeta.month}</span>
+                <div key={event.id} className="std-event-card" onClick={() => navigate('/events/' + event.id)} style={{ cursor: 'pointer' }}>
+                  <div className="std-event-img-wrap">
+                    <img src={event.image_url || "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80"} alt={event.title} />
+                    <div className="date-badge">
+                      <span className="db-day">{dateMeta.day}</span>
+                      <span className="db-month">{dateMeta.month}</span>
+                    </div>
+                    <button className="heart-btn" onClick={(e) => e.stopPropagation()}><Heart size={16} /></button>
                   </div>
-                  <button className="heart-btn"><Heart size={16} /></button>
-                </div>
-                <div className="std-event-info">
-                  <h3>{event.title}</h3>
-                  <div className="std-event-meta">
-                    <span><MapPin size={12} /> {event.location || '-'}</span>
-                    <span><Clock size={12} /> {dateMeta.time}</span>
+                  <div className="std-event-info">
+                    <h3>{event.title}</h3>
+                    <div className="std-event-meta">
+                      <span><MapPin size={12} /> {event.location || '-'}</span>
+                      <span><Clock size={12} /> {dateMeta.time}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )})}
+              )
+            })}
           </div>
         </div>
       </section>
@@ -292,31 +296,32 @@ const Events = () => {
             {events.slice(0, 4).map(event => {
               const dateMeta = formatDate(event.event_date);
               return (
-              <div key={event.id} className="upcoming-row">
-                <div className="up-date">
-                  <span className="up-day">{dateMeta.day}</span>
-                  <span className="up-month" style={{ whiteSpace: 'pre-line' }}>{dateMeta.monthYear}</span>
-                </div>
-                
-                <div className="up-info">
-                  <h3>{event.title}</h3>
-                  <div className="up-meta">
-                    <span><MapPin size={14} /> {event.location || '-'}</span>
-                    <span><Clock size={14} /> {dateMeta.time}</span>
+                <div key={event.id} className="upcoming-row" onClick={() => navigate('/events/' + event.id)} style={{ cursor: 'pointer' }}>
+                  <div className="up-date">
+                    <span className="up-day">{dateMeta.day}</span>
+                    <span className="up-month" style={{ whiteSpace: 'pre-line' }}>{dateMeta.monthYear}</span>
+                  </div>
+
+                  <div className="up-info">
+                    <h3>{event.title}</h3>
+                    <div className="up-meta">
+                      <span><MapPin size={14} /> {event.location || '-'}</span>
+                      <span><Clock size={14} /> {dateMeta.time}</span>
+                    </div>
+                  </div>
+
+                  <div className="up-action">
+                    {event.registration_link ? (
+                      <a href={event.registration_link} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
+                        <button className="buy-ticket-btn">Register</button>
+                      </a>
+                    ) : (
+                      <button className="buy-ticket-btn" onClick={(e) => e.stopPropagation()}>Register</button>
+                    )}
                   </div>
                 </div>
-                
-                <div className="up-action">
-                  {event.registration_link ? (
-                    <a href={event.registration_link} target="_blank" rel="noreferrer">
-                      <button className="buy-ticket-btn">Register</button>
-                    </a>
-                  ) : (
-                    <button className="buy-ticket-btn">Register</button>
-                  )}
-                </div>
-              </div>
-            )})}
+              )
+            })}
           </div>
         </div>
       </section>
